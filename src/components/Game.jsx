@@ -1,6 +1,8 @@
 import React from "react";
 import { ReactP5Wrapper } from "react-p5-wrapper";
-import Bloon from "../library/Bloon";
+import Bloon from "./gameLibrary/Bloon";
+
+import { display } from "./gameLibrary/helper";
 
 const sketch = (p5) => {
   let path = [];
@@ -20,12 +22,7 @@ const sketch = (p5) => {
   };
 
   p5.draw = () => {
-    path.forEach((px, i) => {
-      if (i === 0) return;
-      const prev = path[i - 1];
-
-      p5.line(prev.x, prev.y, px.x, px.y);
-    });
+    display(p5).path(path);
 
     b.update((b) => {
       p5.circle(b.pos.x, b.pos.y, 10);
