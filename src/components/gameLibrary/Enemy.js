@@ -3,14 +3,15 @@ import { draw } from "./helper";
 class Enemy {
   static showForces = false;
 
-  constructor(p5, path) {
-    this.p5 = p5;
+  constructor(world) {
+    this.world = world;
+    this.p5 = world.p5;
     this.size = 20;
-    this.path = path;
+    this.path = world.path;
 
-    this.pos = path.segments[0].start.copy();
+    this.pos = this.path.segments[0].start.copy();
     this.vel = this.p5.createVector(2, 0);
-    this.acc = p5.createVector();
+    this.acc = this.p5.createVector();
 
     this.predictionFactor = 50;
 

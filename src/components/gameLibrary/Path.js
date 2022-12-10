@@ -1,8 +1,7 @@
 class Segment {
-  static showRadius = false;
-
-  constructor(p5, radius, p1, p2) {
-    this.p5 = p5;
+  constructor(world, radius, p1, p2) {
+    this.world = world;
+    this.p5 = world.p5;
     this.radius = radius;
     this.start = p1;
     this.end = p2;
@@ -17,11 +16,15 @@ class Segment {
     );
   }
 
+  update() {
+    this.draw();
+  }
+
   draw() {
     const drawPath = () =>
       this.p5.line(this.start.x, this.start.y, this.end.x, this.end.y);
 
-    if (Segment.showRadius) {
+    if (Path.showRadius) {
       this.p5.strokeWeight(this.radius * 2);
       this.p5.stroke("gray");
       drawPath();
@@ -34,17 +37,19 @@ class Segment {
 }
 
 class Path {
-  constructor(p5, radius, ...points) {
-    this.p5 = p5;
+  static showRadius = false;
+
+  constructor(world, radius, ...points) {
+    this.world = world;
     this.radius = radius;
     this.segments = points
       .slice(1)
-      .map((p, i) => new Segment(p5, radius, points[i], p));
+      .map((p, i) => new Segment(world, radius, points[i], p));
   }
 
-  draw() {
-    this.segments.forEach((s) => s.draw());
+  update() {
+    this.segments.forEach((s) => s.update());
   }
 }
 
-module.exports = { Path, Segment };
+export default Path;
