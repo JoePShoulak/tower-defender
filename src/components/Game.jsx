@@ -2,28 +2,33 @@ import React from "react";
 import { ReactP5Wrapper } from "react-p5-wrapper";
 
 import Bloon from "./gameLibrary/Bloon";
-import Path from "./gameLibrary/Path";
+import { Segment, Path } from "./gameLibrary/Path";
 
 const sketch = (p5) => {
   let path;
   let bloons = [];
-  const bloonCount = 25;
+  const bloonCount = 1;
 
   p5.setup = () => {
     p5.createCanvas(600, 400);
 
-    path = new Path(p5, 10, 0, p5.height / 2, p5.width, p5.height / 2);
+    const p1 = p5.createVector(0, p5.height / 2);
+    const p2 = p5.createVector(p5.width / 2, p5.height / 2.5);
+    const p3 = p5.createVector(p5.width, p5.height);
+
+    path = new Path(p5, 10, p1, p2, p3);
 
     bloons = Array(bloonCount)
       .fill()
       .map(() => {
         const b = new Bloon(p5, path);
-        b.pos.y += p5.random(-50, 50);
+        b.pos.y += p5.random(-200, 200);
         b.pos.x += p5.random(50, 250);
         return b;
       });
 
-    Path.verbose = true;
+    Segment.showRadius = true;
+    Bloon.showForces = true;
   };
 
   p5.draw = () => {
