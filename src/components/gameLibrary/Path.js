@@ -8,6 +8,15 @@ class Segment {
     this.end = p2;
   }
 
+  contains(point) {
+    return (
+      point.x > Math.min(this.start.x, this.end.x) &&
+      point.x < Math.max(this.start.x, this.end.x) &&
+      point.y > Math.min(this.start.y, this.end.y) &&
+      point.y < Math.max(this.start.y, this.end.y)
+    );
+  }
+
   draw() {
     const drawPath = () =>
       this.p5.line(this.start.x, this.start.y, this.end.x, this.end.y);

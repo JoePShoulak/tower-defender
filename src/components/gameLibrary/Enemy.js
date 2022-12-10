@@ -1,6 +1,6 @@
 import { draw } from "./helper";
 
-class Bloon {
+class Enemy {
   static showForces = false;
 
   constructor(p5, path) {
@@ -30,14 +30,7 @@ class Bloon {
 
   distToSegment(segment) {
     const projection = this.projection(segment);
-    if (
-      // Projected point is off the segment
-      projection.x < Math.min(segment.start.x, segment.end.x) ||
-      projection.x > Math.max(segment.start.x, segment.end.x) ||
-      projection.y < Math.min(segment.start.y, segment.end.y) ||
-      projection.y > Math.max(segment.start.y, segment.end.y)
-    )
-      return Infinity;
+    if (!segment.contains(projection)) return Infinity;
 
     return projection.sub(this.pos).mag();
   }
@@ -59,7 +52,7 @@ class Bloon {
   }
 
   applyForce(force) {
-    if (Bloon.showForces) draw(this.p5).force(this, force);
+    if (Enemy.showForces) draw(this.p5).force(this, force);
 
     this.acc.add(force);
   }
@@ -94,4 +87,4 @@ class Bloon {
   }
 }
 
-export default Bloon;
+export default Enemy;

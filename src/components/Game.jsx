@@ -1,7 +1,7 @@
 import React from "react";
 import { ReactP5Wrapper } from "react-p5-wrapper";
 
-import Bloon from "./gameLibrary/Bloon";
+import Enemy from "./gameLibrary/Enemy";
 import { Segment, Path } from "./gameLibrary/Path";
 
 const sketch = (p5) => {
@@ -21,14 +21,14 @@ const sketch = (p5) => {
     bloons = Array(bloonCount)
       .fill()
       .map(() => {
-        const b = new Bloon(p5, path);
+        const b = new Enemy(p5, path);
         b.pos.y += p5.random(-200, 200);
         b.pos.x += p5.random(50, 250);
         return b;
       });
 
     Segment.showRadius = true;
-    Bloon.showForces = true;
+    Enemy.showForces = true;
   };
 
   p5.draw = () => {
